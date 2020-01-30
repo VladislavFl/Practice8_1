@@ -1,0 +1,25 @@
+﻿<Window x:Class="EnergoKomplekt.Authorization"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EnergoKomplekt"
+        mc:Ignorable="d"
+        Title="Авторизация" Height="200" Width="300" ResizeMode="NoResize">
+    <Grid Margin="10,10,11,8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Margin="10">
+            <Label Content="Введите логин:" Target="{Binding ElementName=txtLogin}" />
+            <TextBox Name="txtLogin" />
+            <Label Content="Введите пароль:" Target="{Binding ElementName=txtPassword}" />
+            <TextBox Name="txtPassword" />
+        </StackPanel>
+
+        <Grid Grid.Row="1" HorizontalAlignment="Center" Margin="0,115,0,0">
+            <Button Content="Вход" Click="Accept_Click" MinWidth="60" Margin="0,0,10,0"/>
+        </Grid>
+    </Grid>
+</Window>
