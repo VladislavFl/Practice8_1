@@ -21,12 +21,11 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <GridSplitter Grid.Column="1"  Grid.Row="3" ShowsPreview="False" Width="3"
+        <GridSplitter Grid.Column="1"  Grid.Row="2" ShowsPreview="False" Width="3"
                       HorizontalAlignment="Center" VerticalAlignment="Stretch" />
 
-        <Canvas Grid.ColumnSpan="1" Grid.Row="0">
 
-            <Ribbon x:Name="RibbonWin"  SelectedIndex="0" Width="592">
+        <Ribbon x:Name="RibbonWin" Grid.ColumnSpan="3" Grid.Row="0"  SelectedIndex="0">
 
                 <Ribbon.HelpPaneContent>
                     <RibbonButton SmallImageSource="Images\help.png" />
@@ -86,7 +85,7 @@
                     </RibbonGroup>
                 </RibbonTab>
 
-                <RibbonTab Header="Задание" KeyTip="L">
+                <RibbonTab Header="Задание" KeyTip="L" Height="88" VerticalAlignment="Bottom">
                     <RibbonGroup x:Name="Task" Header="Задача">
                         <RibbonMenuButton  SmallImageSource="Images\task.png" Label="Список задач" KeyTip="V">
                         </RibbonMenuButton>
@@ -94,7 +93,7 @@
                 </RibbonTab>
             </Ribbon>
 
-        </Canvas>
+        
 
         <Canvas Grid.Column="0" Grid.Row="2">
 
@@ -104,7 +103,7 @@
 
         <Canvas Grid.Column="2" Grid.Row="2">
 
-            <TextBlock>Правая панель</TextBlock>
+            <TextBlock Canvas.Right="0">Правая панель</TextBlock>
 
         </Canvas>
     </Grid>
