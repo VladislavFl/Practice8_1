@@ -1,11 +1,11 @@
 ﻿<RibbonWindow x:Class="EnergoKomplekt.MainWindow"
-xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-xmlns:local="clr-namespace:EnergoKomplekt"
-mc:Ignorable="d"
-Title="MainWindow" Height="400" Width="600">
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EnergoKomplekt"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="400" Width="600">
     <Grid>
 
         <Grid.RowDefinitions>
@@ -21,12 +21,11 @@ Title="MainWindow" Height="400" Width="600">
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <GridSplitter Grid.Column="1" Grid.Row="3" ShowsPreview="False" Width="3"
-HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+        <GridSplitter Grid.Column="1"  Grid.Row="2" ShowsPreview="False" Width="3"
+                      HorizontalAlignment="Center" VerticalAlignment="Stretch" />
 
-        <Canvas Grid.ColumnSpan="1" Grid.Row="0">
 
-            <Ribbon x:Name="RibbonWin" SelectedIndex="0" Width="592">
+        <Ribbon x:Name="RibbonWin" Grid.ColumnSpan="3" Grid.Row="0"  SelectedIndex="0">
 
                 <Ribbon.HelpPaneContent>
                     <RibbonButton SmallImageSource="Images\help.png" />
@@ -86,25 +85,43 @@ HorizontalAlignment="Center" VerticalAlignment="Stretch" />
                     </RibbonGroup>
                 </RibbonTab>
 
-                <RibbonTab Header="Задание" KeyTip="L">
+                <RibbonTab Header="Задание" KeyTip="L" Height="88" VerticalAlignment="Bottom">
                     <RibbonGroup x:Name="Task" Header="Задача">
-                        <RibbonMenuButton SmallImageSource="Images\task.png" Label="Список задач" KeyTip="V">
+                        <RibbonMenuButton  SmallImageSource="Images\task.png" Label="Список задач" KeyTip="V">
                         </RibbonMenuButton>
                     </RibbonGroup>
                 </RibbonTab>
             </Ribbon>
 
-        </Canvas>
+
 
         <Canvas Grid.Column="0" Grid.Row="2">
-
-            <TextBlock>Левая панель</TextBlock>
-
+            <TreeView>
+                <TextBox>Элемент TreeView</TextBox>
+                <TreeViewItem Header="Базы данных">
+                    <TreeViewItem Header="MS SQL Server" />
+                    <TreeViewItem Header="MySQL" />
+                    <TreeViewItem Header="MongoDB" />
+                    <TreeViewItem Header="Postgres" />
+                </TreeViewItem>
+                <TreeViewItem Header="Языки программирования">
+                    <TreeViewItem Header="C-языки">
+                        <TreeViewItem Header="C#" />
+                        <TreeViewItem Header="C/C++" />
+                        <TreeViewItem Header="Java" />
+                    </TreeViewItem>
+                    <TreeViewItem Header="Basic">
+                        <TreeViewItem Header="Visual Basic" />
+                        <TreeViewItem Header="VB.Net" />
+                        <TreeViewItem Header="PureBasic" />
+                    </TreeViewItem>
+                </TreeViewItem>
+            </TreeView>
         </Canvas>
 
         <Canvas Grid.Column="2" Grid.Row="2">
 
-            <TextBlock>Правая панель</TextBlock>
+            <TextBlock Canvas.Right="0">Правая панель</TextBlock>
 
         </Canvas>
     </Grid>
