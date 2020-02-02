@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Npgsql;
 
 namespace EnergoKomplekt
 {
@@ -27,6 +28,8 @@ namespace EnergoKomplekt
 
             //string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=usersdb;Integrated Security=True";
             // получаем строку подключения
+
+            /*
             string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
             Console.WriteLine(connectionString);
@@ -41,6 +44,7 @@ namespace EnergoKomplekt
             }
             catch (SqlException ex)
             {
+                MessageBox.Show(ex.Message);
                 Console.WriteLine(ex.Message);
             }
             finally
@@ -48,9 +52,31 @@ namespace EnergoKomplekt
                 // закрываем подключение
                 connection.Close();
                 Console.WriteLine("Подключение закрыто...");
+            }*/
+
+
+            //String connectionString = "Server=127.0.0.1;Port=5432;Database=test;User Id=postgres;Password=12345;";
+            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
+            NpgsqlConnection npgSqlConnection = new NpgsqlConnection(connectionString);
+            try
+            {
+                npgSqlConnection.Open();
+                Console.WriteLine("Подключение открыто");
+            }
+            catch (NpgsqlException e)
+            {
+                MessageBox.Show(e.Message);
+                Console.WriteLine(e.Message);
+                throw;
+            }
+            finally
+            {
+                // закрываем подключение
+                npgSqlConnection.Close();
+                Console.WriteLine("Подключение закрыто...");
             }
 
-            Console.Read();
         }
 
         private void Accept_Click(object sender, RoutedEventArgs e)
