@@ -93,37 +93,34 @@
                 </RibbonTab>
             </Ribbon>
 
-
-
-        <Canvas Grid.Column="0" Grid.Row="2">
-            <TreeView>
-                <TextBox>Элемент TreeView</TextBox>
+        <Grid Grid.Column="0" Grid.Row="2">
+            <TreeView BorderThickness="0">
                 <TreeViewItem Header="Базы данных">
                     <TreeViewItem Header="MS SQL Server" />
                     <TreeViewItem Header="MySQL" />
                     <TreeViewItem Header="MongoDB" />
                     <TreeViewItem Header="Postgres" />
                 </TreeViewItem>
-                <TreeViewItem Header="Языки программирования">
-                    <TreeViewItem Header="C-языки">
-                        <TreeViewItem Header="C#" />
-                        <TreeViewItem Header="C/C++" />
-                        <TreeViewItem Header="Java" />
-                    </TreeViewItem>
-                    <TreeViewItem Header="Basic">
-                        <TreeViewItem Header="Visual Basic" />
-                        <TreeViewItem Header="VB.Net" />
-                        <TreeViewItem Header="PureBasic" />
-                    </TreeViewItem>
+            <TreeViewItem Header="Языки программирования">
+                <TreeViewItem Header="C-языки">
+                    <TreeViewItem Header="C#" />
+                    <TreeViewItem Header="C/C++" />
+                    <TreeViewItem Header="Java" />
                 </TreeViewItem>
+                <TreeViewItem Header="Basic">
+                    <TreeViewItem Header="Visual Basic" />
+                    <TreeViewItem Header="VB.Net" />
+                    <TreeViewItem Header="PureBasic" />
+                </TreeViewItem>
+            </TreeViewItem>
             </TreeView>
-        </Canvas>
+        </Grid>
 
-        <Canvas Grid.Column="2" Grid.Row="2">
+        <Grid Grid.Column="2" Grid.Row="2">
 
-            <TextBlock Canvas.Right="0">Правая панель</TextBlock>
+            <TextBlock Canvas.Left="0">Правая панель</TextBlock>
 
-        </Canvas>
+        </Grid>
     </Grid>
 
 </RibbonWindow>
