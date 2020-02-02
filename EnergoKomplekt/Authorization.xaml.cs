@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +24,33 @@ namespace EnergoKomplekt
         public Authorization()
         {
             InitializeComponent();
+
+            //string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=usersdb;Integrated Security=True";
+            // получаем строку подключения
+            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
+            Console.WriteLine(connectionString);
+
+            // Создание подключения
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                // Открываем подключение
+                connection.Open();
+                Console.WriteLine("Подключение открыто");
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                // закрываем подключение
+                connection.Close();
+                Console.WriteLine("Подключение закрыто...");
+            }
+
+            Console.Read();
         }
 
         private void Accept_Click(object sender, RoutedEventArgs e)
