@@ -13,22 +13,48 @@ namespace EnergoKomplekt
         public Authorization()
         {
             InitializeComponent();
-            
-            //SELECT * FROM СпрПользователи WHERE Пользователь = 'User 1' AND Пароль = '1111'
 
-            /*
-            SELECT Код,
-                CASE WHEN Пользователь = 'User 2' AND Пароль = '222' THEN 'True'
+            //SELECT count(Код)=1 AS res FROM СпрПользователи WHERE Код = 2 AND Пароль = '2222'
+            string sql1 = "SELECT Пользователь FROM СпрПользователи";
 
-            ELSE 'False' END
-                FROM СпрПользователи WHERE Пользователь = 'User 2'
-            */
+            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
+            NpgsqlConnection npgSqlConnection = new NpgsqlConnection(connectionString);
+            try
+            {
+                npgSqlConnection.Open();
+                Console.WriteLine("Подключение открыто");
+            }
+            catch (NpgsqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+            finally
+            {
+                // закрываем подключение
+                //npgSqlConnection.Close();
+                //Console.WriteLine("Подключение закрыто...");
+            }
+
+            NpgsqlCommand command = new NpgsqlCommand(sql1, npgSqlConnection);
+
+            NpgsqlDataReader dr = command.ExecuteReader();
+
+            while (dr.Read())
+            {
+                Console.Write("{0}\n", dr[0]);
+                ComboBoxLogin.Items.Add(dr[0].ToString());
+            }
+
+            npgSqlConnection.Close();
 
         }
 
         private void Accept_Click(object sender, RoutedEventArgs e)
         {
-            string sql1 = "SELECT Код, CASE WHEN Пользователь = '" + txtLogin.Text + "' AND Пароль = '" + txtPassword.Password + "' THEN 'True' ELSE 'False' END FROM СпрПользователи WHERE Пользователь = '" + txtLogin.Text + "'";
+            string sql1 = "SELECT CASE WHEN Пользователь = '" + ComboBoxLogin.Text + "' AND Пароль = '" + txtPassword.Password + "' THEN 'True' ELSE 'False' END FROM СпрПользователи WHERE Пользователь = '" + ComboBoxLogin.Text + "'";
             bool log = false;
 
             string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
@@ -58,8 +84,8 @@ namespace EnergoKomplekt
 
             while (dr.Read())
             {
-                Console.Write("{0}\t{1} \n", dr[0], dr[1]);
-                log = dr[1].Equals("True");
+                Console.Write("{0}\n", dr[0]);
+                log = dr[0].Equals("True");
             }
 
             MessageBox.Show(log.ToString());
