@@ -13,17 +13,10 @@
         </Grid.RowDefinitions>
 
         <StackPanel Margin="10">
-<<<<<<< HEAD
-            <Label Content="Имя пользователя:" Target="{Binding ElementName=txtLogin}" />
-            <ComboBox Name="ComboBoxLogin" ItemsSource="{Binding}" />
-            <Label Content="Пароль:" Target="{Binding ElementName=txtPassword}" />
-            <PasswordBox Name="txtPassword" />
-=======
             <Label FontSize="13" Content="Имя пользователя:" Target="{Binding ElementName=txtLogin}" />
             <ComboBox Height="25" IsEditable="True" Name="ComboBoxLogin" />
             <Label FontSize="13" Content="Пароль:" Target="{Binding ElementName=txtPassword}" />
             <PasswordBox Height="25" Padding="2" Name="txtPassword" />
->>>>>>> 411b283f04eb2de3b80fc54a85e23f03fb757ffb
         </StackPanel>
 
         <Grid Grid.Row="1" HorizontalAlignment="Center" Margin="0,125,0,0">
