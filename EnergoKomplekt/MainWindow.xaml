@@ -16,9 +16,9 @@
 
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition MinWidth="80" Width="*" />
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition MinWidth="250" Width="*" />
         </Grid.ColumnDefinitions>
 
         <GridSplitter Grid.Column="1"  Grid.Row="2" ShowsPreview="False" Width="5"
