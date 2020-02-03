@@ -94,25 +94,12 @@
             </Ribbon>
 
         <Grid Grid.Column="0" Grid.Row="2">
-            <TreeView BorderThickness="0">
-                <TreeViewItem Header="Базы данных">
-                    <TreeViewItem Header="MS SQL Server" />
-                    <TreeViewItem Header="MySQL" />
-                    <TreeViewItem Header="MongoDB" />
-                    <TreeViewItem Header="Postgres" />
-                </TreeViewItem>
-            <TreeViewItem Header="Языки программирования">
-                <TreeViewItem Header="C-языки">
-                    <TreeViewItem Header="C#" />
-                    <TreeViewItem Header="C/C++" />
-                    <TreeViewItem Header="Java" />
-                </TreeViewItem>
-                <TreeViewItem Header="Basic">
-                    <TreeViewItem Header="Visual Basic" />
-                    <TreeViewItem Header="VB.Net" />
-                    <TreeViewItem Header="PureBasic" />
-                </TreeViewItem>
-            </TreeViewItem>
+            <TreeView BorderThickness="0" x:Name="TreeView">
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Path=Nodes}">
+                        <TextBlock Text="{Binding Name}" />
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
             </TreeView>
         </Grid>
 

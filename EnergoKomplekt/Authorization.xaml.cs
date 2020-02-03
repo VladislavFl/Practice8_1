@@ -7,8 +7,6 @@ using Npgsql;
 namespace EnergoKomplekt
 {
     /// <summary>
-    ///SELECT count(Код)=1 AS res FROM СпрПользователи WHERE Код = 2 AND Пароль = '2222'
-    ///"SELECT CASE WHEN Пользователь = '" + ComboBoxLogin.Text + "' AND Пароль = '" + txtPassword.Password + "' THEN 'True' ELSE 'False' END FROM СпрПользователи WHERE Пользователь = '" + ComboBoxLogin.Text + "'"
     /// Логика взаимодействия для Authorization.xaml
     /// </summary>
     public partial class Authorization : Window
@@ -24,9 +22,21 @@ namespace EnergoKomplekt
 
         private void Accept_Click(object sender, RoutedEventArgs e)
         {
+            if (CheckPassAndLogin())
+            {
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Show();
+                this.Close();
+            }
+        }
+
+        private bool CheckPassAndLogin()
+        {
             bool log = false;
 
-            string sql1 = "SELECT count(Код)=1 AS res FROM СпрПользователи WHERE Пользователь = '" + ComboBoxLogin.Text + "' AND Пароль = '" + txtPassword.Password + "'";
+            DataRowView vr = (DataRowView)ComboBoxLogin.SelectedItem;
+
+            string sql1 = "SELECT count(Код)=1 AS res FROM СпрПользователи WHERE Код = " + vr[0] + " AND Пароль = '" + txtPassword.Password + "'";
 
             string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
@@ -42,12 +52,6 @@ namespace EnergoKomplekt
                 Console.WriteLine(ex.Message);
                 throw;
             }
-            finally
-            {
-                // закрываем подключение
-                //npgSqlConnection.Close();
-                //Console.WriteLine("Подключение закрыто...");
-            }
 
             NpgsqlCommand command = new NpgsqlCommand(sql1, npgSqlConnection);
 
@@ -56,20 +60,12 @@ namespace EnergoKomplekt
             while (dr.Read())
             {
                 Console.Write("{0}\n", dr[0]);
-                MessageBox.Show(dr[0].ToString());
                 log = dr[0].ToString().Equals("True");
             }
 
-            //MessageBox.Show(log.ToString());
-
             npgSqlConnection.Close();
 
-            if (log)
-            {
-                MainWindow mainWindow = new MainWindow();
-                mainWindow.Show();
-                this.Close();
-            }
+            return log;
         }
 
         private void UsersToDataTable()
@@ -99,9 +95,9 @@ namespace EnergoKomplekt
 
             ComboBoxLogin.DataContext = dataView;
 
-            ComboBoxLogin.ItemsSource = usersDT.DefaultView;
-            ComboBoxLogin.DisplayMemberPath = usersDT.Columns["Пользователь"].ToString();
-            ComboBoxLogin.SelectedValuePath = usersDT.Columns["Пользователь"].ToString();
+            //ComboBoxLogin.ItemsSource = usersDT.DefaultView;
+            //ComboBoxLogin.DisplayMemberPath = usersDT.Columns["Пользователь"].ToString();
+            //ComboBoxLogin.SelectedValuePath = usersDT.Columns["Пользователь"].ToString();
 
             npgSqlConnection.Close();
             Console.WriteLine("Подключение закрыто...");

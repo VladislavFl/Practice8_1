@@ -14,7 +14,7 @@
 
         <StackPanel Margin="10">
             <Label FontSize="13" Content="Имя пользователя:" Target="{Binding ElementName=txtLogin}" />
-            <ComboBox Height="25" IsEditable="True" Name="ComboBoxLogin" />
+            <ComboBox Height="25" IsEditable="True" Name="ComboBoxLogin" DisplayMemberPath="Пользователь" SelectedValuePath="Пользователь" ItemsSource="{Binding}"/>
             <Label FontSize="13" Content="Пароль:" Target="{Binding ElementName=txtPassword}" />
             <PasswordBox Height="25" Padding="2" Name="txtPassword" />
         </StackPanel>
