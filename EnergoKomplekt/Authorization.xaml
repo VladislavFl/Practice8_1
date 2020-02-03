@@ -5,21 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EnergoKomplekt"
         mc:Ignorable="d"
-        Title="Авторизация" Height="200" Width="300" ResizeMode="NoResize">
+        Title="Авторизация" Height="215" Width="350" ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
     <Grid Margin="10,10,11,8">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <StackPanel Margin="10">
+<<<<<<< HEAD
             <Label Content="Имя пользователя:" Target="{Binding ElementName=txtLogin}" />
             <ComboBox Name="ComboBoxLogin" ItemsSource="{Binding}" />
             <Label Content="Пароль:" Target="{Binding ElementName=txtPassword}" />
             <PasswordBox Name="txtPassword" />
+=======
+            <Label FontSize="13" Content="Имя пользователя:" Target="{Binding ElementName=txtLogin}" />
+            <ComboBox Height="25" IsEditable="True" Name="ComboBoxLogin" />
+            <Label FontSize="13" Content="Пароль:" Target="{Binding ElementName=txtPassword}" />
+            <PasswordBox Height="25" Padding="2" Name="txtPassword" />
+>>>>>>> 411b283f04eb2de3b80fc54a85e23f03fb757ffb
         </StackPanel>
 
-        <Grid Grid.Row="1" HorizontalAlignment="Center" Margin="0,115,0,0">
-            <Button Content="ОК" Click="Accept_Click" MinWidth="60" Margin="0,0,10,0"/>
+        <Grid Grid.Row="1" HorizontalAlignment="Center" Margin="0,125,0,0">
+            <Button Content="ОК" Click="Accept_Click" Height="25" MinWidth="60" Margin="0,3,10,0"/>
         </Grid>
     </Grid>
 </Window>
