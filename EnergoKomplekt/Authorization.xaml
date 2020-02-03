@@ -12,14 +12,14 @@
         </Grid.RowDefinitions>
 
         <StackPanel Margin="10">
-            <Label Content="Введите логин:" Target="{Binding ElementName=txtLogin}" />
+            <Label Content="Имя пользователя:" Target="{Binding ElementName=txtLogin}" />
             <TextBox Name="txtLogin" />
-            <Label Content="Введите пароль:" Target="{Binding ElementName=txtPassword}" />
-            <TextBox Name="txtPassword" />
+            <Label Content="Пароль:" Target="{Binding ElementName=txtPassword}" />
+            <PasswordBox Name="txtPassword" />
         </StackPanel>
 
         <Grid Grid.Row="1" HorizontalAlignment="Center" Margin="0,115,0,0">
-            <Button Content="Вход" Click="Accept_Click" MinWidth="60" Margin="0,0,10,0"/>
+            <Button Content="ОК" Click="Accept_Click" MinWidth="60" Margin="0,0,10,0"/>
         </Grid>
     </Grid>
 </Window>

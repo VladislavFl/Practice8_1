@@ -1,18 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Npgsql;
 
 namespace EnergoKomplekt
@@ -25,37 +13,24 @@ namespace EnergoKomplekt
         public Authorization()
         {
             InitializeComponent();
-
-            //string connectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=usersdb;Integrated Security=True";
-            // получаем строку подключения
+            
+            //SELECT * FROM СпрПользователи WHERE Пользователь = 'User 1' AND Пароль = '1111'
 
             /*
-            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            SELECT Код,
+                CASE WHEN Пользователь = 'User 2' AND Пароль = '222' THEN 'True'
 
-            Console.WriteLine(connectionString);
+            ELSE 'False' END
+                FROM СпрПользователи WHERE Пользователь = 'User 2'
+            */
 
-            // Создание подключения
-            SqlConnection connection = new SqlConnection(connectionString);
-            try
-            {
-                // Открываем подключение
-                connection.Open();
-                Console.WriteLine("Подключение открыто");
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show(ex.Message);
-                Console.WriteLine(ex.Message);
-            }
-            finally
-            {
-                // закрываем подключение
-                connection.Close();
-                Console.WriteLine("Подключение закрыто...");
-            }*/
+        }
 
+        private void Accept_Click(object sender, RoutedEventArgs e)
+        {
+            string sql1 = "SELECT Код, CASE WHEN Пользователь = '" + txtLogin.Text + "' AND Пароль = '" + txtPassword.Password + "' THEN 'True' ELSE 'False' END FROM СпрПользователи WHERE Пользователь = '" + txtLogin.Text + "'";
+            bool log = false;
 
-            //String connectionString = "Server=127.0.0.1;Port=5432;Database=test;User Id=postgres;Password=12345;";
             string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
             NpgsqlConnection npgSqlConnection = new NpgsqlConnection(connectionString);
@@ -64,26 +39,39 @@ namespace EnergoKomplekt
                 npgSqlConnection.Open();
                 Console.WriteLine("Подключение открыто");
             }
-            catch (NpgsqlException e)
+            catch (NpgsqlException ex)
             {
-                MessageBox.Show(e.Message);
-                Console.WriteLine(e.Message);
+                MessageBox.Show(ex.Message);
+                Console.WriteLine(ex.Message);
                 throw;
             }
             finally
             {
                 // закрываем подключение
-                npgSqlConnection.Close();
-                Console.WriteLine("Подключение закрыто...");
+                //npgSqlConnection.Close();
+                //Console.WriteLine("Подключение закрыто...");
             }
 
-        }
+            NpgsqlCommand command = new NpgsqlCommand(sql1, npgSqlConnection);
 
-        private void Accept_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
-            this.Close();
+            NpgsqlDataReader dr = command.ExecuteReader();
+
+            while (dr.Read())
+            {
+                Console.Write("{0}\t{1} \n", dr[0], dr[1]);
+                log = dr[1].Equals("True");
+            }
+
+            MessageBox.Show(log.ToString());
+
+            npgSqlConnection.Close();
+
+            if (log)
+            {
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Show();
+                this.Close();
+            }
         }
     }
 }
