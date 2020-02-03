@@ -13,7 +13,7 @@
 
         <StackPanel Margin="10">
             <Label Content="Имя пользователя:" Target="{Binding ElementName=txtLogin}" />
-            <ComboBox Name="ComboBoxLogin" />
+            <ComboBox Name="ComboBoxLogin" ItemsSource="{Binding}" />
             <Label Content="Пароль:" Target="{Binding ElementName=txtPassword}" />
             <PasswordBox Name="txtPassword" />
         </StackPanel>
