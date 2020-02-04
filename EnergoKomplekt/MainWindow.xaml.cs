@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Configuration;
 using System.Data;
 using System.Linq;
@@ -27,12 +28,15 @@ namespace EnergoKomplekt
     public partial class MainWindow : RibbonWindow
     {
         private DataTable usersDT = new DataTable();
+        private DataSet dataSet = new DataSet();
         private ObservableCollection<Node> nodes;
+        private ObservableCollection<Node> nodes2;
+        private List<ObservableCollection<Node>> listNodes;
         public MainWindow()
         {
             InitializeComponent();
 
-            string sql1 = "SELECT * FROM ГлавноеМеню";
+            string sql1 = "SELECT * FROM ГлавноеМеню order by Код desc";
 
             string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
@@ -53,52 +57,58 @@ namespace EnergoKomplekt
 
             dataAdapter.Fill(usersDT);
 
-            DataView dataView = new DataView(usersDT);
-
-            nodes = new ObservableCollection<Node>
+            listNodes = new List<ObservableCollection<Node>>();
+            nodes2 = new ObservableCollection<Node>(){
+            new Node
             {
-                new Node
+                Name ="001",
+                Nodes = new ObservableCollection<Node>
                 {
-                    Name ="Европа",
-                    Nodes = new ObservableCollection<Node>
-                    {
-                        new Node {Name="Германия" },
-                        new Node {Name="Франция" },
-                        new Node
-                        {
-                            Name ="Великобритания",
-                            Nodes = new ObservableCollection<Node>
-                            {
-                                new Node {Name="Англия" },
-                                new Node {Name="Шотландия" },
-                                new Node {Name="Уэльс" },
-                                new Node {Name="Сев. Ирландия" },
-                            }
-                        }
-                    }
-                },
-                new Node
-                {
-                    Name ="Азия",
-                    Nodes = new ObservableCollection<Node>
-                    {
-                        new Node {Name="Китай(Каровавирус)" },
-                        new Node {Name="Япония" },
-                        new Node { Name ="Индия" }
-                    }
-                },
-                new Node { Name="Африка" },
-                new Node { Name="Америка" },
-                new Node { Name="Австралия" }
+                    new Node {Name="001001" },
+                    new Node {Name="001002" },
+                }
+            }
             };
 
-            TreeView.ItemsSource = nodes;
+            int maxIdRod = 0;
+            for (int i = 0; i < usersDT.Rows.Count; i++)
+            {
+                if (usersDT.Rows[i][1].ToString() != "")
+                {
+                    if (maxIdRod < Convert.ToInt32(usersDT.Rows[i][1]))
+                        maxIdRod = Convert.ToInt32(usersDT.Rows[i][1]);
+                }
+                else
+                {
+                    usersDT.Rows[i][1] = 0;
+                }
+            }
 
-            //TreeView.ItemsSource = dataView;
-
-            //TreeView.ItemsSource = usersDT.DefaultView;
-            //TreeView.DisplayMemberPath = usersDT.Columns["Код"].ToString();
-            //TreeView.SelectedValuePath = usersDT.Columns["Код"].ToString();
+            for (int j = 0; j <= maxIdRod; j++)
+            {
+                listNodes.Add(new ObservableCollection<Node>());
+            }
+            
+            for (int j = maxIdRod; j >= 0; j--)
+            {
+                for (int i = 0; i < usersDT.Rows.Count; i++)
+                {
+                    if (Convert.ToInt32(usersDT.Rows[i][1]) == j)
+                    {
+                        Console.WriteLine(usersDT.Rows[i][4].ToString() + j);
+                        if (Convert.ToInt32(usersDT.Rows[i][0]) <= maxIdRod)
+                        {
+                            listNodes[j].Add(new Node(usersDT.Rows[i][4].ToString(), listNodes[Convert.ToInt32(usersDT.Rows[i][0])]));
+                        }
+                        else
+                        {
+                            listNodes[j].Add(new Node(usersDT.Rows[i][4].ToString()));
+                        }
+                    }
+                }
+            }
+            
+            TreeView.ItemsSource = listNodes[0];
 
             npgSqlConnection.Close();
             Console.WriteLine("Подключение закрыто...");
