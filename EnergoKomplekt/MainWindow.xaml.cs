@@ -17,7 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Controls.Ribbon;
-using EnergoKomplekt.trash;
+using EnergoKomplekt.Controllers;
 using Npgsql;
 
 namespace EnergoKomplekt
@@ -28,10 +28,6 @@ namespace EnergoKomplekt
     public partial class MainWindow : RibbonWindow
     {
         private DataTable usersDT = new DataTable();
-        private DataSet dataSet = new DataSet();
-        private ObservableCollection<Node> nodes;
-        private ObservableCollection<Node> nodes2;
-        private List<ObservableCollection<Node>> listNodes;
         public MainWindow()
         {
             InitializeComponent();
@@ -56,62 +52,16 @@ namespace EnergoKomplekt
             NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter(sql1, npgSqlConnection);
 
             dataAdapter.Fill(usersDT);
-
-            listNodes = new List<ObservableCollection<Node>>();
-            nodes2 = new ObservableCollection<Node>(){
-            new Node
-            {
-                Name ="001",
-                Nodes = new ObservableCollection<Node>
-                {
-                    new Node {Name="001001" },
-                    new Node {Name="001002" },
-                }
-            }
-            };
-
-            int maxIdRod = 0;
-            for (int i = 0; i < usersDT.Rows.Count; i++)
-            {
-                if (usersDT.Rows[i][1].ToString() != "")
-                {
-                    if (maxIdRod < Convert.ToInt32(usersDT.Rows[i][1]))
-                        maxIdRod = Convert.ToInt32(usersDT.Rows[i][1]);
-                }
-                else
-                {
-                    usersDT.Rows[i][1] = 0;
-                }
-            }
-
-            for (int j = 0; j <= maxIdRod; j++)
-            {
-                listNodes.Add(new ObservableCollection<Node>());
-            }
             
-            for (int j = maxIdRod; j >= 0; j--)
-            {
-                for (int i = 0; i < usersDT.Rows.Count; i++)
-                {
-                    if (Convert.ToInt32(usersDT.Rows[i][1]) == j)
-                    {
-                        Console.WriteLine(usersDT.Rows[i][4].ToString() + j);
-                        if (Convert.ToInt32(usersDT.Rows[i][0]) <= maxIdRod)
-                        {
-                            listNodes[j].Add(new Node(usersDT.Rows[i][4].ToString(), listNodes[Convert.ToInt32(usersDT.Rows[i][0])]));
-                        }
-                        else
-                        {
-                            listNodes[j].Add(new Node(usersDT.Rows[i][4].ToString()));
-                        }
-                    }
-                }
-            }
-            
-            TreeView.ItemsSource = listNodes[0];
+            NodesHierarchy nodesHierarchy = new NodesHierarchy(usersDT);
+
+            ObservableCollection<Node> nodes = nodesHierarchy.GetHodesHierarchy();
+
+            TreeView.ItemsSource = nodes;
 
             npgSqlConnection.Close();
             Console.WriteLine("Подключение закрыто...");
         }
     }
+
 }

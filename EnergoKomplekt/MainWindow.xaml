@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EnergoKomplekt"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="MainWindow" Height="400" Width="600" MinHeight="250" MinWidth="300">
     <Grid>
@@ -95,21 +96,42 @@
 
         <Grid Grid.Column="0" Grid.Row="2">
             <TreeView BorderThickness="0" x:Name="TreeView">
-                <TreeView.ItemTemplate>
+                <!--<TreeView.ItemTemplate>
                     <HierarchicalDataTemplate ItemsSource="{Binding Path=Nodes}">
                         <TextBlock Text="{Binding Name}" />
                     </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>-->
+
+                <!--
+                <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Path=Nodes}">
+                        <TextBlock>
+                            <TextBlock.Style>
+                            <Style>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=Type}" Value="1">
+                                        <Setter Property="TextBlock.Text" Value="{Binding Path=Name}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </HierarchicalDataTemplate>
+                    </TreeView.ItemTemplate>-->
+
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Path=Nodes}">
+                        <TextBlock TextWrapping="Wrap">
+                           <InlineUIContainer>
+                               <Image Source="Images/folder.png" Height="10"></Image>
+                           </InlineUIContainer>
+                            <TextBlock Text="{Binding Name}"/>
+                        </TextBlock>
+                    </HierarchicalDataTemplate>
                 </TreeView.ItemTemplate>
+
             </TreeView>
         </Grid>
-        
-        <!-- <Grid Grid.Column="0" Grid.Row="2">
-            <TreeView x:Name="TreeView" BorderThickness="0"
-                ItemsSource="{Binding СпрПользователи}"
-                ItemTemplate="{StaticResource Template1}" 
-                >
-            </TreeView>
-        </Grid>-->
 
         <Grid Grid.Column="2" Grid.Row="2">
 

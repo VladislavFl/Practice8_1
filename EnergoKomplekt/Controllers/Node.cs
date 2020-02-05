@@ -5,16 +5,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EnergoKomplekt.trash
+namespace EnergoKomplekt.Controllers
 {
     public class Node
     {
         public string Name { get; set; }
-        public ObservableCollection<Node> Nodes { get; set; }
 
-        public void SetName(String name) { this.Name = name; }
+        public int Type { get; set; }
+
+        public int KodeIcon { get; set; }
 
         public Node() { }
+        public ObservableCollection<Node> Nodes { get; set; }
+
+        public void SetName(String name)
+        {
+            this.Name = name;
+        }
+
+        public void SetType(int type)
+        {
+            this.Type = type;
+        }
+
+        public void SetKodeIcon(int kodeIcon)
+        {
+            this.KodeIcon = kodeIcon;
+        }
 
         public Node(String name)
         {
