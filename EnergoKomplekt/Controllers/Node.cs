@@ -15,8 +15,32 @@ namespace EnergoKomplekt.Controllers
 
         public int KodeIcon { get; set; }
 
+        public string IconPatch { get; set; }
+
         public Node() { }
         public ObservableCollection<Node> Nodes { get; set; }
+
+        public void SetIconPatch(int kodeIcon)
+        {
+            switch (kodeIcon)
+            {
+                case 1:
+                    IconPatch = "../Images/folder.png";
+                    break;
+                case 2:
+                    IconPatch = "../Images/Excel2.png";
+                    break;
+                case 3:
+                    IconPatch = "../Images/Excel.png";
+                    break;
+                case 4:
+                    IconPatch = "../Images/Excel3.png";
+                    break;
+                default:
+                    IconPatch = "../Images/help.png";
+                    break;
+            }
+        }
 
         public void SetName(String name)
         {

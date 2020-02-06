@@ -27,6 +27,7 @@ namespace EnergoKomplekt
     /// </summary>
     public partial class MainWindow : RibbonWindow
     {
+        public ObservableCollection<Phone> Phones { get; set; }
         private DataTable usersDT = new DataTable();
         public MainWindow()
         {
@@ -52,15 +53,37 @@ namespace EnergoKomplekt
             NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter(sql1, npgSqlConnection);
 
             dataAdapter.Fill(usersDT);
-            
-            NodesHierarchy nodesHierarchy = new NodesHierarchy(usersDT);
-
-            ObservableCollection<Node> nodes = nodesHierarchy.GetHodesHierarchy();
-
-            TreeView.ItemsSource = nodes;
 
             npgSqlConnection.Close();
             Console.WriteLine("Подключение закрыто...");
+
+            NodesHierarchy nodesHierarchy = new NodesHierarchy(usersDT);
+
+            ObservableCollection<Node> nodes = nodesHierarchy.GetHodesHierarchyFolders();
+
+            ObservableCollection<Node> nodes2 = nodesHierarchy.GetHodesHierarchy();
+
+            TreeView.ItemsSource = nodes;
+
+            Phones = new ObservableCollection<Phone>
+            {
+                new Phone {Id=1, ImagePath="/Images/folder.png", Title="iPhone 6S", Company="Apple" },
+                new Phone {Id=2, ImagePath="/Images/folder.png", Title="Lumia 950", Company="Microsoft" },
+                new Phone {Id=3, ImagePath="/Images/folder.png", Title="Nexus 5X", Company="Google" },
+                new Phone {Id=4, ImagePath="/Images/folder.png", Title="Galaxy S6", Company="Samsung"}
+            };
+            phonesList.ItemsSource = nodes2;
+
+        }
+
+        private void phonesList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Node p = new Node();
+            p = (Node)phonesList.SelectedItem;
+            if (p != null)
+            {
+                phonesList.ItemsSource = p.Nodes;
+            }
         }
     }
 

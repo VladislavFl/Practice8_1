@@ -5,8 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EnergoKomplekt"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="MainWindow" Height="400" Width="600" MinHeight="250" MinWidth="300">
+
+    <Window.Resources>
+        <DataTemplate x:Key="listTemplate">
+            <StackPanel Margin="5">
+                <Image Width="45" Height="45" Margin="5" Source="{Binding Path=IconPatch}" />
+                <TextBlock FontSize="10" Text="{Binding Path=Name}" HorizontalAlignment="Center" />
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
+
+
     <Grid>
 
         <Grid.RowDefinitions>
@@ -119,8 +131,9 @@
                 </HierarchicalDataTemplate>
                     </TreeView.ItemTemplate>-->
 
+                <!--
                 <TreeView.ItemTemplate>
-                    <HierarchicalDataTemplate ItemsSource="{Binding Path=Nodes}">
+                    <HierarchicalDataTemplate ItemsSource="{Binding Path=Nodes}" ItemBindingGroup="{Binding name}">
                         <TextBlock TextWrapping="Wrap">
                            <InlineUIContainer>
                                <Image Height="15">
@@ -130,13 +143,13 @@
                                            <DataTrigger Binding="{Binding Path=KodeIcon}" Value="1">
                                                <Setter Property="Image.Source" Value="{Binding Source=Images/folder.png}"/>
                                            </DataTrigger>
+                                           <DataTrigger Binding="{Binding Path=KodeIcon}" Value="2">
+                                               <Setter Property="Image.Source" Value="{Binding Source=Images/Excel2.png}"/>
+                                           </DataTrigger>
                                            <DataTrigger Binding="{Binding Path=KodeIcon}" Value="3">
                                                <Setter Property="Image.Source" Value="{Binding Source=Images/Excel.png}"/>
                                            </DataTrigger>
                                            <DataTrigger Binding="{Binding Path=KodeIcon}" Value="4">
-                                               <Setter Property="Image.Source" Value="{Binding Source=Images/Excel2.png}"/>
-                                           </DataTrigger>
-                                           <DataTrigger Binding="{Binding Path=KodeIcon}" Value="2">
                                                <Setter Property="Image.Source" Value="{Binding Source=Images/Excel3.png}"/>
                                            </DataTrigger>
                                        </Style.Triggers>
@@ -148,13 +161,33 @@
                         </TextBlock>
                     </HierarchicalDataTemplate>
                 </TreeView.ItemTemplate>
+                -->
 
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Path=Nodes}">
+                        <TextBlock TextWrapping="Wrap">
+                           <InlineUIContainer>
+                               <Image Height="15" Source="Images/folder.png"/>
+                           </InlineUIContainer>
+                            <TextBlock Text="{Binding Name}"/>
+                        </TextBlock>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+                
             </TreeView>
         </Grid>
 
         <Grid Grid.Column="2" Grid.Row="2">
 
-            <TextBlock Canvas.Left="0">Правая панель</TextBlock>
+            <ListBox x:Name="phonesList" ItemTemplate="{StaticResource listTemplate}" 
+                     SelectionChanged="phonesList_SelectionChanged"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
 
         </Grid>
     </Grid>
