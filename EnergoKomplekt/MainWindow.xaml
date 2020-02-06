@@ -123,7 +123,26 @@
                     <HierarchicalDataTemplate ItemsSource="{Binding Path=Nodes}">
                         <TextBlock TextWrapping="Wrap">
                            <InlineUIContainer>
-                               <Image Source="Images/folder.png" Height="10"></Image>
+                               <Image Height="15">
+                               <Image.Style>
+                                   <Style>
+                                       <Style.Triggers>
+                                           <DataTrigger Binding="{Binding Path=KodeIcon}" Value="1">
+                                               <Setter Property="Image.Source" Value="{Binding Source=Images/folder.png}"/>
+                                           </DataTrigger>
+                                           <DataTrigger Binding="{Binding Path=KodeIcon}" Value="3">
+                                               <Setter Property="Image.Source" Value="{Binding Source=Images/Excel.png}"/>
+                                           </DataTrigger>
+                                           <DataTrigger Binding="{Binding Path=KodeIcon}" Value="4">
+                                               <Setter Property="Image.Source" Value="{Binding Source=Images/Excel2.png}"/>
+                                           </DataTrigger>
+                                           <DataTrigger Binding="{Binding Path=KodeIcon}" Value="2">
+                                               <Setter Property="Image.Source" Value="{Binding Source=Images/Excel3.png}"/>
+                                           </DataTrigger>
+                                       </Style.Triggers>
+                                   </Style>
+                               </Image.Style>
+                               </Image>
                            </InlineUIContainer>
                             <TextBlock Text="{Binding Name}"/>
                         </TextBlock>
